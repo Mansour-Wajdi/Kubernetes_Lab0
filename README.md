@@ -1,48 +1,56 @@
+
 # tpKubernetes
 
-1///
+## Overview
+This document describes the steps taken to complete the Kubernetes lab exercises, covering installation, configuration, deployment, scaling, service setup, and testing for a basic Kubernetes environment with Minikube.
+
+## 1. Setting Up Minikube and Docker
+
+Download and install Minikube:
+
+```bash
 curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
-
 sudo install minikube-linux-amd64 /usr/local/bin/minikube
-
 minikube version
+```
 
+![Minikube Version](https://github.com/user-attachments/assets/cfadee60-2a80-467d-a742-887ce0e8529e)
 
-![image](https://github.com/user-attachments/assets/cfadee60-2a80-467d-a742-887ce0e8529e)
+Set up Docker permissions:
 
-
+```bash
 sudo usermod -aG docker $USER
-
 newgrp docker
-
 docker info
+```
 
-![image](https://github.com/user-attachments/assets/62fa8192-90db-440f-90fa-cfe33f35e918)
+![Docker Info](https://github.com/user-attachments/assets/62fa8192-90db-440f-90fa-cfe33f35e918)
 
+Start Minikube:
+
+```bash
 minikube start
+```
 
-![image](https://github.com/user-attachments/assets/c331fbb3-d855-47f0-8656-5a24d65e7d5a)
+![Minikube Start](https://github.com/user-attachments/assets/c331fbb3-d855-47f0-8656-5a24d65e7d5a)
 
+Download and set up `kubectl`:
 
-
+```bash
 curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-
 chmod +x kubectl
-
 sudo mv kubectl /usr/local/bin/
-
 kubectl version --client
-
 kubectl cluster-info
+```
 
-![image](https://github.com/user-attachments/assets/6264a97e-a110-4375-b316-a276a5653d74)
+![Kubectl Info](https://github.com/user-attachments/assets/6264a97e-a110-4375-b316-a276a5653d74)
 
+## 2. Deploying an Application
 
-2//////
+Create the `deployment.yaml` file for an Nginx deployment:
 
-nano deployment.yaml
-
-"""
+```yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -62,31 +70,35 @@ spec:
         image: nginx:latest
         ports:
         - containerPort: 80
-"""
+```
 
+Apply the deployment configuration and verify the deployment:
+
+```bash
 kubectl apply -f deployment.yaml
-
-
 kubectl get deployments
 kubectl get pods
+```
 
-![image](https://github.com/user-attachments/assets/9678695b-5d5e-41cf-a101-01542c8f2877)
+![Deployment Status](https://github.com/user-attachments/assets/9678695b-5d5e-41cf-a101-01542c8f2877)
 
+## 3. Scaling the Application
 
-3//
+Scale the Nginx deployment to multiple replicas:
 
+```bash
 kubectl scale deployment nginx-deployment --replicas=3
-
 kubectl get deployments
 kubectl get pods
+```
 
-![image](https://github.com/user-attachments/assets/7a55256c-cfc1-4fe2-9714-01118fae24c8)
+![Scaling Status](https://github.com/user-attachments/assets/7a55256c-cfc1-4fe2-9714-01118fae24c8)
 
-4///
+## 4. Creating a Kubernetes Service
 
-sudo nano service.yaml
+Create the `service.yaml` file to expose the Nginx application internally:
 
-"""
+```yaml
 apiVersion: v1
 kind: Service
 metadata:
@@ -99,70 +111,57 @@ spec:
       port: 80
       targetPort: 80
   type: ClusterIP
-"""
+```
 
+Apply the service configuration and check the service status:
 
+```bash
 kubectl apply -f service.yaml
 kubectl get services
+```
 
-![image](https://github.com/user-attachments/assets/560e0285-764b-4a60-a12d-20e8ff3ddb19)
+![Service Status](https://github.com/user-attachments/assets/560e0285-764b-4a60-a12d-20e8ff3ddb19)
 
-////Vérifiez que le service est accessible à partir du cluster Kubernetes //////
+### Verifying Service Accessibility
 
+Launch a temporary `curl` pod to confirm the service is accessible within the cluster:
+
+```bash
 kubectl run curlpod --image=curlimages/curl:latest --restart=Never -i --tty -- /bin/sh
-
-    curl http://nginx-service
-
-
+curl http://nginx-service
 exit
-
 kubectl delete pod curlpod
+```
 
+![Service Accessibility](https://github.com/user-attachments/assets/d6e837ff-128c-4cff-81ac-8bae233cdea3)
 
-![image](https://github.com/user-attachments/assets/d6e837ff-128c-4cff-81ac-8bae233cdea3)
+## 5. Additional Configuration: Docker and Minikube
 
-//////////// 5 
-Ajouter votre utilisateur au groupe docker :
+Add your user to the Docker group for permissions:
 
-Exécutez la commande suivante pour ajouter votre utilisateur au groupe docker :
-
-
+```bash
 sudo usermod -aG docker $USER
-
-Redémarrer la session :
-
-Pour que les modifications prennent effet, vous devez redémarrer votre session. Vous pouvez soit fermer la session actuelle et vous reconnecter, soit redémarrer la machine :
-
-
 newgrp docker
+```
 
+Restart Minikube:
 
-Redémarrer Minikube :
-
-Maintenant, essayez de démarrer Minikube :
-
-
+```bash
 minikube start
-Puis vérifiez son statut :
-
-
 minikube status
+```
 
+Run Minikube in tunnel mode (useful for external access testing):
 
-
-
-
+```bash
 sudo -E minikube tunnel
+```
 
+Check the Minikube profile and services:
 
-
-
+```bash
 minikube profile list
-
-
-
 kubectl get services
-![image](https://github.com/user-attachments/assets/db75e523-b95b-4d9d-aa7e-07af2ee1d778)
+```
 
-
-
+![Minikube Profile and Services](https://github.com/user-attachments/assets/db75e523-b95b-4d9d-aa7e-07af2ee1d778)
