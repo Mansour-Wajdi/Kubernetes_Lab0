@@ -120,7 +120,7 @@ kubectl apply -f service.yaml
 kubectl get services
 ```
 
-![Service Status](https://github.com/user-attachments/assets/560e0285-764b-4a60-a12d-20e8ff3ddb19)
+![image](https://github.com/user-attachments/assets/7cfba163-306d-48a6-8934-d043169c1720)
 
 ### Verifying Service Accessibility
 
