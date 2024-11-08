@@ -182,13 +182,6 @@ curl http://<EXTERNAL-IP>
 ![image](https://github.com/user-attachments/assets/0e3ed862-ee6d-4763-a7ab-b48ff86cc161)
 
 
-
-****************************
-**************
-**************
-**************
-**************
-****************************
 ## 6. Updating the Deployment
 
 Update `deployment.yaml` to use a different image version:
@@ -226,9 +219,6 @@ Monitor the pod update:
 ```bash
 kubectl get pods -w
 ```
-
-![image](https://github.com/user-attachments/assets/39706cfb-6255-4c3e-89c7-f00c15dc792a)
-
 
 Verify the updated image version:
 
@@ -277,9 +267,15 @@ Access the Prometheus UI:
 kubectl port-forward deploy/prometheus-server 9090
 ```
 
+![image](https://github.com/user-attachments/assets/d22f7a05-08ae-4b6b-b827-114d0d22ce13)
+
 Navigate to [http://localhost:9090](http://localhost:9090) to see the Prometheus interface.
 
 ![Prometheus UI](https://github.com/user-attachments/assets/d2eedf7e-cd52-4d10-afec-1b4456e35c8d)
+
+In "Status" -> "Targets"
+
+![Capture d’écran (1952)](https://github.com/user-attachments/assets/0b6a4f5f-9b5a-42db-997a-ea102a8dcdb3)
 
 ## 8. Logging with Fluentd
 
@@ -307,18 +303,10 @@ kubectl logs -l app=nginx
 ![Fluentd Logs](https://github.com/user-attachments/assets/c9dcdc3e-bc21-4aa6-8dc3-ebe134b4f552)
 
 
-
-****************************
-****************************
-****************************
-****************************
-**************
-**************
-****************************
-****************************
-****************************
-****************************
-
+***************
+***************
+***************
+***************
 6////
 update deployment.yaml
 
