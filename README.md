@@ -164,8 +164,6 @@ minikube profile list
 kubectl get services
 ```
 
-![Minikube Profile and Services](https://github.com/user-attachments/assets/db75e523-b95b-4d9d-aa7e-07af2ee1d778)
-
 Verify Accessibility:
 
 ```bash
