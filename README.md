@@ -137,19 +137,28 @@ kubectl delete pod curlpod
 
 ## 5. Additional Configuration: Docker and Minikube
 
-Add your user to the Docker group for permissions:
+Modify the Service Type to LoadBalancer
 
-```bash
-sudo usermod -aG docker $USER
-newgrp docker
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+spec:
+  selector:
+    app: nginx
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: LoadBalancer
 ```
 
-Restart Minikube:
+Apply this updated configuration:
 
 ```bash
-minikube start
-minikube status
-```
+kubectl apply -f service.yaml
+```  
 
 Run Minikube in tunnel mode (useful for external access testing):
 
