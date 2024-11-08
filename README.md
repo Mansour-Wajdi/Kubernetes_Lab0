@@ -227,6 +227,9 @@ Monitor the pod update:
 kubectl get pods -w
 ```
 
+![image](https://github.com/user-attachments/assets/39706cfb-6255-4c3e-89c7-f00c15dc792a)
+
+
 Verify the updated image version:
 
 ```bash
@@ -302,6 +305,19 @@ kubectl logs -l app=nginx
 ```
 
 ![Fluentd Logs](https://github.com/user-attachments/assets/c9dcdc3e-bc21-4aa6-8dc3-ebe134b4f552)
+
+
+
+****************************
+****************************
+****************************
+****************************
+**************
+**************
+****************************
+****************************
+****************************
+****************************
 
 6////
 update deployment.yaml
