@@ -1,5 +1,5 @@
 
-# tpKubernetes
+# Kubernetes_Lab0
 
 ## Overview
 This document describes the steps taken to complete the Kubernetes lab exercises, covering installation, configuration, deployment, scaling, service setup, and testing for a basic Kubernetes environment with Minikube.
